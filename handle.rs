@@ -1,27 +1,30 @@
-// #[crate_id = "handle#0.1"];
-mod primitive;
+extern crate primitive;
 
-pub struct LineHandle;
-pub struct AreaHandle;
+use primitive::Translatable;
+use primitive::Rotatable;
 
-impl LineHandle {
-// impl primitive::Translatable for LineHandle {
-    pub fn translate(&self) {
-    	self.translate();
+pub struct LineHandle {
+	name: ~str
+}
+pub struct AreaHandle {
+	name: ~str
+}
+
+impl Translatable for LineHandle {
+    fn translate(&self) {
+        println!("{}: Translating line handle", self.name);
     }
 }
 
-impl AreaHandle {
-// impl primitive::Translatable for AreaHandle {
-    pub fn translate(&self) {
-        println!("Translating area handle");
+impl Translatable for AreaHandle {
+    fn translate(&self) {
+        println!("{}: Translating area handle", self.name);
     }
 }
 
-impl AreaHandle {
-// impl primitive::Rotatable for AreaHandle {
-    pub fn rotate(&self) {
-        println!("Rotating area handle");
+impl Rotatable for AreaHandle {
+    fn rotate(&self) {
+        println!("{}: Rotating area handle", self.name);
     }
 }
 

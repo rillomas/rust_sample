@@ -1,28 +1,32 @@
-// extern mod handle;
-mod primitive;
-mod handle;
+extern crate primitive;
 
+use primitive::Translatable;
+use primitive::Rotatable;
+
+mod handle;
 /// Call translate for given translatable
-// fn translate<T:primitive::Translatable>(tr: &T) {
+// fn translate<T: handle::Translatable>(tr: &T) {
+// fn translate<T: primitive::Translatable>(tr: &T) {
+fn translate<T: Translatable>(tr: &T) {
 // fn translate(tr: &primitive::Translatable) {
-//     tr.translate();
-// }
+    tr.translate();
+}
 
 /// Call rotate for given rotatable
-// fn rotate<T:primitive::Rotatable>(r: &T) {
+// fn rotate<T: handle::Rotatable>(r: &T) {
+// fn rotate<T: primitive::Rotatable>(r: &T) {
+fn rotate<T: Rotatable>(r: &T) {
 // fn rotate(r: &primitive::Rotatable){
-//     r.rotate();
-// }
+    r.rotate();
+}
 
 fn main() {
-    let lh = handle::LineHandle;
-    let ah = handle::AreaHandle;
+    // println!("Hello world");
+    let lh = handle::LineHandle { name: ~"line"};
+    let ah = handle::AreaHandle { name: ~"area"};
 
-    lh.translate();
-    ah.translate();
-    ah.rotate();
-    // translate(&lh);
-    // translate(&ah);
-    // rotate(&ah);
+    translate(&lh);
+    translate(&ah);
+    rotate(&ah);
 }
 
