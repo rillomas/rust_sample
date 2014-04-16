@@ -2,15 +2,21 @@ extern crate primitive;
 
 use primitive::Translatable;
 use primitive::Rotatable;
+use primitive::Point;
+use primitive::Size;
 
 /// A handle shaped like a line
 pub struct LineHandle {
-	name: ~str
+	name: ~str,
+	start: Point,
+	end: Point
 }
 
 /// A handle shaped like a rectangular area
 pub struct AreaHandle {
-	name: ~str
+	name: ~str,
+	center: Point,
+	size: Size
 }
 
 impl Translatable for LineHandle {

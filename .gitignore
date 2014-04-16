@@ -4,6 +4,7 @@
 *.exe
 *.dll
 *.rlib
+*.o
 .reviewboardrc
 
 
