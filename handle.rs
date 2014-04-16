@@ -3,9 +3,12 @@ extern crate primitive;
 use primitive::Translatable;
 use primitive::Rotatable;
 
+/// A handle shaped like a line
 pub struct LineHandle {
 	name: ~str
 }
+
+/// A handle shaped like a rectangular area
 pub struct AreaHandle {
 	name: ~str
 }
