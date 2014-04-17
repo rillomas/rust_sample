@@ -4,6 +4,8 @@
 *.exe
 *.rlib
 *.o
+/*.dll
+/*.lib
 .reviewboardrc
 CMakeFiles
 CMakeCache.txt
