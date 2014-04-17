@@ -6,6 +6,12 @@
 *.rlib
 *.o
 .reviewboardrc
+CMakeFiles
+CMakeCache.txt
+*.vcxproj
+*.filters
+*.sln
+*.cmake
 
 
 #################
