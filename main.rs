@@ -61,6 +61,7 @@ fn main() {
         keyFunc: null(),
         updateFunc: null()
     };
-    unsafe { esUtil::esInitContext(&context); }
+    esUtil::initContext(&context);
+    esUtil::createWindow(&context, ~"OpenGL ES Test", 320, 340, 0);
 }
 

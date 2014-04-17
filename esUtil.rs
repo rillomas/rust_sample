@@ -26,6 +26,9 @@ pub type EGLDisplay = *c_void;
 pub type EGLContext = *c_void;
 pub type FuncPointer = *c_void;
 
+// win32 related types
+type LPCWSTR = *u16;
+
 pub struct ESContext {
     userData: *c_void,
     width: GLint,
@@ -45,5 +48,16 @@ pub struct ESContext {
 
 #[link(name="es_util")]
 extern {
-    pub fn esInitContext(context: *ESContext);
+    fn esInitContext(context: *ESContext);
+    fn esCreateWindow(context: *ESContext, title: LPCWSTR, width: GLint, height: GLint, flags: GLuint);
+}
+
+
+pub fn initContext(context: &ESContext) {
+    unsafe { esInitContext(context); }
+}
+
+pub fn createWindow(context: &ESContext, title: ~str, width: i32, height: i32, flags: u32) {
+    let t = title.to_utf16();
+    unsafe { esCreateWindow(context, t.as_ptr(), width, height, flags); }
 }
