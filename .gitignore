@@ -2,7 +2,6 @@
 ## ProjectSpecific
 #################
 *.exe
-*.dll
 *.rlib
 *.o
 .reviewboardrc
@@ -12,6 +11,8 @@ CMakeCache.txt
 *.filters
 *.sln
 *.cmake
+angle
+rust-opengles
 
 
 #################

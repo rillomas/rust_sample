@@ -47,6 +47,8 @@ fn main() {
     // translate(&ah);
     // rotate(&ah);
 
+    // Currently must build by the following
+    // rustc .\main.rs -L . -C link-args="-les_util -llibEGL  -llibGLESv2 -lgdi32"
     let context = esUtil::ESContext {
         userData: null(),
         width: 300,
@@ -55,6 +57,9 @@ fn main() {
         eglDisplay: null(),
         eglContext: null(),
         eglSurface: null(),
+        drawFunc: null(),
+        keyFunc: null(),
+        updateFunc: null()
     };
     unsafe { esUtil::esInitContext(&context); }
 }

@@ -24,6 +24,7 @@ pub type EGLNativeWindowType = *c_void;
 pub type EGLSurface = *c_void;
 pub type EGLDisplay = *c_void;
 pub type EGLContext = *c_void;
+pub type FuncPointer = *c_void;
 
 pub struct ESContext {
     userData: *c_void,
@@ -33,13 +34,16 @@ pub struct ESContext {
     eglDisplay: EGLDisplay,
     eglContext: EGLContext,
     eglSurface: EGLSurface,
+    drawFunc: FuncPointer,
+    keyFunc: FuncPointer,
+    updateFunc: FuncPointer
 }
     /// Callbacks
     // void (ESCALLBACK *drawFunc) ( void* );
     // void (ESCALLBACK *keyFunc) ( void*, unsigned char, int, int );
     // void (ESCALLBACK *updateFunc) ( void*, float deltaTime );
 
-#[link(name="es_util", kind="static")]
+#[link(name="es_util")]
 extern {
-    fn esInitContext(context: *ESContext);
+    pub fn esInitContext(context: *ESContext);
 }
