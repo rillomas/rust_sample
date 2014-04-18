@@ -2,14 +2,16 @@
 #![crate_type = "lib"]
 extern crate std;
 extern crate gl2;
-use std::libc::{c_void, c_uchar, c_int, c_float};
+extern crate egl;
+use std::libc::{c_void, c_uchar, c_int, c_uint, c_float};
 
-// EGL related types
-pub type EGLNativeWindowType = *c_void;
-pub type EGLSurface = *c_void;
-pub type EGLDisplay = *c_void;
-pub type EGLContext = *c_void;
-pub type FuncPointer = *c_void;
+pub static WINDOW_RGB: c_uint = 0;
+pub static WINDOW_ALPHA: c_uint = 1;
+pub static WINDOW_DEPTH: c_uint = 2;
+pub static WINDOW_STENCIL: c_uint = 4;
+pub static WINDOW_MULTISAMPLE: c_uint = 8;
+pub static WINDOW_POST_SUB_BUFFER_SUPPORTED: c_uint = 16;
+
 
 // Callbacks
 pub type DrawFunc = extern "cdecl" fn(*ESContext);
@@ -23,10 +25,10 @@ pub struct ESContext {
     userData: *c_void,
     width: gl2::GLint,
     height: gl2::GLint,
-    hWnd: EGLNativeWindowType,
-    eglDisplay: EGLDisplay,
-    eglContext: EGLContext,
-    eglSurface: EGLSurface,
+    hWnd: egl::EGLNativeWindowType,
+    display: egl::EGLDisplay,
+    context: egl::EGLContext,
+    surface: egl::EGLSurface,
     drawFunc: Option<DrawFunc>,
     keyFunc: Option<KeyFunc>,
     updateFunc: Option<UpdateFunc>
@@ -36,7 +38,7 @@ pub struct ESContext {
 #[link(name="es_util")]
 extern "cdecl" {
     fn esInitContext(context: *ESContext);
-    fn esCreateWindow(context: *ESContext, title: LPCWSTR, width: gl2::GLint, height: gl2::GLint, flags: gl2::GLuint);
+    fn esCreateWindow(context: *ESContext, title: LPCWSTR, width: gl2::GLint, height: gl2::GLint, flags: gl2::GLuint) -> gl2::GLboolean;
     fn esMainLoop(context: *ESContext);
     fn esRegisterDrawFunc(context: *ESContext, func: DrawFunc);
     fn esRegisterKeyFunc(context: *ESContext, func: KeyFunc);
@@ -48,11 +50,14 @@ pub fn initContext(context: &ESContext) {
     unsafe { esInitContext(context); }
 }
 
-pub fn createWindow(context: &ESContext, title: ~str, width: i32, height: i32, flags: u32) {
+pub fn createWindow(context: &ESContext, title: ~str, width: i32, height: i32, flags: u32) -> bool{
     let mut t = title.to_utf16();
     // Null terminate before passing on.
     t.push(0u16); 
-    unsafe { esCreateWindow(context, t.as_ptr(), width, height, flags); }
+    unsafe {
+        let res = esCreateWindow(context, t.as_ptr(), width, height, flags);
+        return res == gl2::TRUE;
+    }
 }
 
 pub fn registerDrawFunc(context: *ESContext, func: DrawFunc) {

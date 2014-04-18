@@ -2,7 +2,9 @@ extern crate std;
 // extern crate primitive;
 extern crate esUtil;
 extern crate gl2;
+extern crate egl;
 use std::ptr::null;
+use std::io;
 
 
 // use primitive::Translatable;
@@ -30,13 +32,11 @@ use std::ptr::null;
 // }
 
 extern "cdecl" fn drawHandler(context: *esUtil::ESContext) {
-    unsafe {
-        // Set the viewport
-        let deref = *context;
-        gl2::viewport(0,0,deref.width, deref.height);
-    }
+    // Set the viewport
+    unsafe { gl2::viewport(0,0,(*context).width, (*context).height); }
     // Clear the color buffer
     gl2::clear(gl2::COLOR_BUFFER_BIT);
+    unsafe { egl::swap_buffers((*context).display, (*context).surface); }
 }
 
 fn main() {
@@ -66,18 +66,26 @@ fn main() {
         width: 0,
         height: 0,
         hWnd: null(),
-        eglDisplay: null(),
-        eglContext: null(),
-        eglSurface: null(),
+        display: null(),
+        context: null(),
+        surface: null(),
         drawFunc: None,
         keyFunc: None,
         updateFunc: None
     };
     esUtil::initContext(&context);
-    esUtil::createWindow(&context, ~"OpenGL ESをテスト中", 320, 340, 0);
+    println!("Enter line to create window");
+    match io::stdin().read_line() {
+        Ok(s) => println!("typed {}", s),
+        Err(e) => println!("error: {}", e)
+    }
+    let result = esUtil::createWindow(&context, ~"OpenGL ESをテスト中", 320, 240, esUtil::WINDOW_RGB);
+    if !result {
+        println!("Failed to create window");
+        return;
+    }
 
-    gl2::clear_color (1.0f32, 1.0f32, 1.0f32, 0.0f32);
+    gl2::clear_color(1.0f32, 1.0f32, 1.0f32, 0.0f32);
     esUtil::registerDrawFunc(&context, drawHandler);
-    // gl2::clear_color(1.0f32, 1.0f32, 1.0f32, 0.0f32);
     esUtil::mainLoop(&context);
 }
