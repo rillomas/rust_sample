@@ -1,9 +1,10 @@
 #![crate_id = "esUtil#0.1"]
 #![crate_type = "lib"]
-extern crate std;
+extern crate libc;
 extern crate gl2;
 extern crate egl;
-use std::libc::{c_void, c_uchar, c_int, c_uint, c_float};
+use libc::types::common::c95::{c_void};
+use libc::types::os::arch::c95::{c_uchar, c_int, c_uint, c_float};
 
 pub static WINDOW_RGB: c_uint = 0;
 pub static WINDOW_ALPHA: c_uint = 1;
@@ -22,16 +23,16 @@ pub type UpdateFunc = extern "cdecl" fn(*ESContext, c_float);
 type LPCWSTR = *u16;
 
 pub struct ESContext {
-    userData: *c_void,
-    width: gl2::GLint,
-    height: gl2::GLint,
-    hWnd: egl::EGLNativeWindowType,
-    display: egl::EGLDisplay,
-    context: egl::EGLContext,
-    surface: egl::EGLSurface,
-    drawFunc: Option<DrawFunc>,
-    keyFunc: Option<KeyFunc>,
-    updateFunc: Option<UpdateFunc>
+    pub userData: *c_void,
+    pub width: gl2::GLint,
+    pub height: gl2::GLint,
+    pub hWnd: egl::EGLNativeWindowType,
+    pub display: egl::EGLDisplay,
+    pub context: egl::EGLContext,
+    pub surface: egl::EGLSurface,
+    pub drawFunc: Option<DrawFunc>,
+    pub keyFunc: Option<KeyFunc>,
+    pub updateFunc: Option<UpdateFunc>
 }
 
 #[cfg(target_os = "win32", target_arch = "x86")]

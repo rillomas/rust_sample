@@ -9,8 +9,12 @@
 #![crate_id = "gl2#0.1"]
 #![crate_type = "lib"]
 
-use std::libc::{c_uint, c_uchar, c_void, c_char, int8_t, c_short, c_int, uint8_t, c_ushort};
-use std::libc::{int32_t, intptr_t, ssize_t};
+extern crate libc;
+use libc::types::common::c95::{c_void};
+use libc::types::common::c99::{int8_t, int32_t, uint8_t};
+use libc::types::os::arch::c95::{c_short, c_int, c_uint, c_uchar, c_char, c_ushort};
+use libc::types::os::arch::c99::{intptr_t};
+use libc::types::os::arch::posix88::{ssize_t};
 use std::cast;
 use std::cast::transmute;
 use std::cmp;

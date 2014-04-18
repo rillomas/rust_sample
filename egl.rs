@@ -1,7 +1,7 @@
 #![crate_id = "egl#0.1"]
 #![crate_type = "lib"]
-extern crate std;
-use std::libc::{c_void};
+extern crate libc;
+use libc::types::common::c95::{c_void};
 
 // EGL related types
 pub type EGLNativeWindowType = *c_void;

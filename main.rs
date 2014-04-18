@@ -4,7 +4,7 @@ extern crate esUtil;
 extern crate gl2;
 extern crate egl;
 use std::ptr::null;
-use std::io;
+// use std::io;
 
 
 // use primitive::Translatable;
@@ -60,7 +60,7 @@ fn main() {
     // rotate(&ah);
 
     // Currently must build by the following
-    // rustc .\main.rs -L . -C link-args="-les_util -llibEGL  -llibGLESv2 -lgdi32"
+    // rustc .\main.rs -L . -C link-args="-lgdi32"
     let context = esUtil::ESContext {
         userData: null(),
         width: 0,
@@ -74,11 +74,11 @@ fn main() {
         updateFunc: None
     };
     esUtil::initContext(&context);
-    println!("Enter line to create window");
-    match io::stdin().read_line() {
-        Ok(s) => println!("typed {}", s),
-        Err(e) => println!("error: {}", e)
-    }
+    // println!("Enter line to create window");
+    // match io::stdin().read_line() {
+    //     Ok(s) => println!("typed {}", s),
+    //     Err(e) => println!("error: {}", e)
+    // }
     let result = esUtil::createWindow(&context, ~"OpenGL ESをテスト中", 320, 240, esUtil::WINDOW_RGB);
     if !result {
         println!("Failed to create window");
