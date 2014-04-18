@@ -29,6 +29,16 @@ use std::ptr::null;
 //     l.name = name;
 // }
 
+extern "cdecl" fn drawHandler(context: *esUtil::ESContext) {
+    unsafe {
+        // Set the viewport
+        let deref = *context;
+        gl2::viewport(0,0,deref.width, deref.height);
+    }
+    // Clear the color buffer
+    gl2::clear(gl2::COLOR_BUFFER_BIT);
+}
+
 fn main() {
     // println!("Hello world");
     // let mut lh = LineHandle {
@@ -59,13 +69,15 @@ fn main() {
         eglDisplay: null(),
         eglContext: null(),
         eglSurface: null(),
-        drawFunc: null(),
-        keyFunc: null(),
-        updateFunc: null()
+        drawFunc: None,
+        keyFunc: None,
+        updateFunc: None
     };
     esUtil::initContext(&context);
     esUtil::createWindow(&context, ~"OpenGL ESをテスト中", 320, 340, 0);
 
-    // esUtil::registerDrawFunc(&context, ) 
+    gl2::clear_color (1.0f32, 1.0f32, 1.0f32, 0.0f32);
+    esUtil::registerDrawFunc(&context, drawHandler);
+    // gl2::clear_color(1.0f32, 1.0f32, 1.0f32, 0.0f32);
     esUtil::mainLoop(&context);
 }
