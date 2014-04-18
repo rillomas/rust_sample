@@ -66,6 +66,6 @@ fn main() {
     esUtil::initContext(&context);
     esUtil::createWindow(&context, ~"OpenGL ESをテスト中", 320, 340, 0);
 
-    gl2::clear_color(1.0f32, 1.0f32, 1.0f32, 1.0f32);
+    // esUtil::registerDrawFunc(&context, ) 
     esUtil::mainLoop(&context);
 }
