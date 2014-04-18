@@ -1,8 +1,10 @@
 extern crate std;
 // extern crate primitive;
 extern crate esUtil;
-
+extern crate gl2;
 use std::ptr::null;
+
+
 // use primitive::Translatable;
 // use primitive::Rotatable;
 // use primitive::Point;
@@ -51,8 +53,8 @@ fn main() {
     // rustc .\main.rs -L . -C link-args="-les_util -llibEGL  -llibGLESv2 -lgdi32"
     let context = esUtil::ESContext {
         userData: null(),
-        width: 300,
-        height: 300,
+        width: 0,
+        height: 0,
         hWnd: null(),
         eglDisplay: null(),
         eglContext: null(),
@@ -62,6 +64,8 @@ fn main() {
         updateFunc: null()
     };
     esUtil::initContext(&context);
-    esUtil::createWindow(&context, ~"OpenGL ES Test", 320, 340, 0);
-}
+    esUtil::createWindow(&context, ~"OpenGL ESをテスト中", 320, 340, 0);
 
+    gl2::clear_color(1.0f32, 1.0f32, 1.0f32, 1.0f32);
+    esUtil::mainLoop(&context);
+}

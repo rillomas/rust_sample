@@ -46,10 +46,12 @@ pub struct ESContext {
     // void (ESCALLBACK *keyFunc) ( void*, unsigned char, int, int );
     // void (ESCALLBACK *updateFunc) ( void*, float deltaTime );
 
+#[cfg(target_os = "win32", target_arch = "x86")]
 #[link(name="es_util")]
-extern {
+extern "cdecl" {
     fn esInitContext(context: *ESContext);
     fn esCreateWindow(context: *ESContext, title: LPCWSTR, width: GLint, height: GLint, flags: GLuint);
+    fn esMainLoop(context: *ESContext);
 }
 
 
@@ -58,6 +60,12 @@ pub fn initContext(context: &ESContext) {
 }
 
 pub fn createWindow(context: &ESContext, title: ~str, width: i32, height: i32, flags: u32) {
-    let t = title.to_utf16();
+    let mut t = title.to_utf16();
+    // Null terminate before passing on.
+    t.push(0u16); 
     unsafe { esCreateWindow(context, t.as_ptr(), width, height, flags); }
+}
+
+pub fn mainLoop(context: &ESContext) {
+    unsafe { esMainLoop(context); }
 }
