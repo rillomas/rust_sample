@@ -55,16 +55,20 @@ static LRESULT WINAPI messageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 }
 
 
-bool createWindow(WindowContext* context, LPCTSTR title) {
-    WNDCLASS wndclass = {0}; 
+bool WINAPI_CALL_CONVENTION createWindow(WindowContext* context, LPCTSTR title) {
+    WNDCLASS wnd;
+    memset(&wnd, 0, sizeof(wnd));
     HINSTANCE hInstance = GetModuleHandle(NULL);
-    wndclass.style         = CS_OWNDC;
-    wndclass.lpfnWndProc   = (WNDPROC)messageHandler; 
-    wndclass.hInstance     = hInstance; 
-    wndclass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH); 
-    wndclass.lpszClassName = TEXT("opengles2.0");
+    wnd.lpfnWndProc   = (WNDPROC)messageHandler;
+    wnd.style         = CS_OWNDC;
+    wnd.hInstance     = hInstance; 
+    wnd.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+    wnd.hCursor = LoadCursor(NULL, IDC_ARROW);
+    wnd.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH); 
+    wnd.lpszMenuName = NULL;
+    wnd.lpszClassName = TEXT("opengles2.0");
 
-    if (!RegisterClass (&wndclass) ) {
+    if (!RegisterClass (&wnd) ) {
         return false; 
     }
 
@@ -78,10 +82,10 @@ bool createWindow(WindowContext* context, LPCTSTR title) {
     windowRect.right = context->width;
     windowRect.bottom = context->height;
 
-    BOOL result = AdjustWindowRect(&windowRect, wStyle, FALSE);
-    if (!result) {
-        return false;
-    }
+    // BOOL result = AdjustWindowRect(&windowRect, wStyle, FALSE);
+    // if (!result) {
+    //     return false;
+    // }
 
     HWND handle = CreateWindow(
                         TEXT("opengles2.0"),
@@ -109,7 +113,7 @@ bool createWindow(WindowContext* context, LPCTSTR title) {
     return true;
 }
 
-void mainLoop(WindowContext* context) {
+void WINAPI_CALL_CONVENTION mainLoop(WindowContext* context) {
     MSG msg = { 0 };
     int done = 0;
     // DWORD lastTime = GetTickCount();

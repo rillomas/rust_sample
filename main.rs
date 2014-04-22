@@ -1,8 +1,8 @@
-extern crate std;
+// extern crate std;
 // extern crate primitive;
 // extern crate esUtil;
-extern crate gl2;
-extern crate egl;
+// extern crate gl2;
+// extern crate egl;
 extern crate winapi;
 use std::ptr::null;
 // use std::io;
@@ -41,13 +41,15 @@ use std::ptr::null;
 // }
 
 fn main() {
+    // let handle = winapi::get_module_handle(Some(~"main.exe"));
+    let handle = winapi::get_module_handle(None);
+    println!("handle: {}", handle);
     let context = winapi::WindowContext {
         width: 320,
         height: 240,
         handle: null()
     };
-    let title = ~"Sample Window";
-    let result = winapi::create_window(&context, title);
+    let result = winapi::create_window(&context, ~"Sample Window");
     if !result {
         println!("Failed to create window");
         return;
