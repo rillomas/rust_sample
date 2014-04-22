@@ -15,9 +15,13 @@ pub static WINDOW_POST_SUB_BUFFER_SUPPORTED: c_uint = 16;
 
 
 // Callbacks
-pub type DrawFunc = extern "cdecl" fn(*ESContext);
-pub type KeyFunc = extern "cdecl" fn(*ESContext, c_uchar, c_int, c_int);
-pub type UpdateFunc = extern "cdecl" fn(*ESContext, c_float);
+// pub type DrawFunc = extern "cdecl" fn(*ESContext);
+// pub type KeyFunc = extern "cdecl" fn(*ESContext, c_uchar, c_int, c_int);
+// pub type UpdateFunc = extern "cdecl" fn(*ESContext, c_float);
+pub type DrawFunc = *c_void;
+pub type KeyFunc = *c_void;
+pub type UpdateFunc = *c_void;
+
 
 // win32 related types
 type LPCWSTR = *u16;
@@ -30,9 +34,9 @@ pub struct ESContext {
     pub display: egl::EGLDisplay,
     pub context: egl::EGLContext,
     pub surface: egl::EGLSurface,
-    pub drawFunc: Option<DrawFunc>,
-    pub keyFunc: Option<KeyFunc>,
-    pub updateFunc: Option<UpdateFunc>
+    pub drawFunc: DrawFunc,
+    pub keyFunc: KeyFunc,
+    pub updateFunc: UpdateFunc
 }
 
 #[cfg(target_os = "win32", target_arch = "x86")]

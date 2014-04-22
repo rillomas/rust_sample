@@ -1,6 +1,7 @@
 #################
 ## ProjectSpecific
 #################
+*.a
 *.exe
 *.rlib
 *.o
@@ -9,6 +10,7 @@
 .reviewboardrc
 CMakeFiles
 CMakeCache.txt
+Makefile
 *.vcxproj
 *.filters
 *.sln
