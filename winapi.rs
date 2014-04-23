@@ -30,21 +30,13 @@ extern "stdcall" {
 
 pub fn get_module_handle(name: Option<~str>) -> HMODULE {
     match name {
-        Some(ref n) => unsafe {
-            let mut t = n.to_utf16();
-            // Null terminate before passing on.
-            t.push(0u16); 
-            return GetModuleHandleW(t.as_ptr());
-        },
+        Some(n) => return std::os::win32::as_utf16_p(n, |buf| unsafe { GetModuleHandleW(buf) }),
         None => unsafe { return GetModuleHandleW(null())}
     }
 }
 
 pub fn create_window(context: *WindowContext, title: ~str) -> bool {
-    let mut t = title.to_utf16();
-    // Null terminate before passing on.
-    t.push(0u16); 
-    unsafe { return createWindow(context, t.as_ptr()); }
+    return std::os::win32::as_utf16_p(title, |buf| unsafe { createWindow(context, buf) });
 }
 
 pub fn main_loop(context: *WindowContext) {
