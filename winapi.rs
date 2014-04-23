@@ -17,7 +17,7 @@ pub struct WindowContext {
 
 #[cfg(target_os = "win32", target_arch = "x86")]
 #[link(name="winapi")]
-extern "stdcall" {
+extern {
     fn createWindow(context: *WindowContext, title: LPCWSTR) -> bool;
     fn mainLoop(context: *WindowContext);
 }

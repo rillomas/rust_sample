@@ -55,7 +55,7 @@ static LRESULT WINAPI messageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 }
 
 
-bool WINAPI_CALL_CONVENTION createWindow(WindowContext* context, LPCTSTR title) {
+bool createWindow(WindowContext* context, LPCTSTR title) {
     WNDCLASS wnd;
     memset(&wnd, 0, sizeof(wnd));
     HINSTANCE hInstance = GetModuleHandle(NULL);
@@ -82,10 +82,10 @@ bool WINAPI_CALL_CONVENTION createWindow(WindowContext* context, LPCTSTR title) 
     windowRect.right = context->width;
     windowRect.bottom = context->height;
 
-    // BOOL result = AdjustWindowRect(&windowRect, wStyle, FALSE);
-    // if (!result) {
-    //     return false;
-    // }
+    BOOL result = AdjustWindowRect(&windowRect, wStyle, FALSE);
+    if (!result) {
+        return false;
+    }
 
     HWND handle = CreateWindow(
                         TEXT("opengles2.0"),
@@ -113,7 +113,7 @@ bool WINAPI_CALL_CONVENTION createWindow(WindowContext* context, LPCTSTR title) 
     return true;
 }
 
-void WINAPI_CALL_CONVENTION mainLoop(WindowContext* context) {
+void mainLoop(WindowContext* context) {
     MSG msg = { 0 };
     int done = 0;
     // DWORD lastTime = GetTickCount();

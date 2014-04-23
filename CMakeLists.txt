@@ -8,3 +8,6 @@ set(ROOT_DIR winapi)
 set(SRC_FILES ${ROOT_DIR}/winapi.c)
 
 add_library(winapi STATIC ${SRC_FILES})
+
+add_executable(winapi_sample winapi_sample.c)
+target_link_libraries(winapi_sample winapi)
