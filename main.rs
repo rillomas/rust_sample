@@ -75,8 +75,6 @@ fn main() {
     // translate(&ah);
     // rotate(&ah);
 
-    // Currently must build by the following
-    // rustc .\main.rs -L . -C link-args="-lgdi32"
     // let context = esUtil::ESContext {
     //     userData: null(),
     //     width: 0,

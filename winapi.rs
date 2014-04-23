@@ -15,30 +15,32 @@ pub struct WindowContext {
     pub handle: *c_void
 }
 
-#[cfg(target_os = "win32", target_arch = "x86")]
+#[cfg(windows)]
 #[link(name="winapi")]
-extern {
+#[link(name="gdi32")]
+extern "stdcall" {
     fn createWindow(context: *WindowContext, title: LPCWSTR) -> bool;
     fn mainLoop(context: *WindowContext);
 }
 
-#[cfg(target_os = "win32", target_arch = "x86")]
+// #[cfg(target_os = "win32", target_arch = "x86")]
+#[cfg(windows)]
 #[link(name="kernel32")]
-extern "stdcall" {
+extern "system" {
     fn GetModuleHandleW(lpModuleName: LPCWSTR) -> HMODULE;
 }
 
 pub fn get_module_handle(name: Option<~str>) -> HMODULE {
     match name {
-        Some(n) => return std::os::win32::as_utf16_p(n, |buf| unsafe { GetModuleHandleW(buf) }),
-        None => unsafe { return GetModuleHandleW(null())}
+        Some(n) => std::os::win32::as_utf16_p(n, |buf| unsafe { GetModuleHandleW(buf) }),
+        None => unsafe { GetModuleHandleW(null())}
     }
 }
 
 pub fn create_window(context: *WindowContext, title: ~str) -> bool {
-    return std::os::win32::as_utf16_p(title, |buf| unsafe { createWindow(context, buf) });
+    std::os::win32::as_utf16_p(title, |buf| unsafe { createWindow(context, buf) })
 }
 
 pub fn main_loop(context: *WindowContext) {
-    unsafe { mainLoop(context); }
+    unsafe { mainLoop(context) }
 }

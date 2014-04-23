@@ -55,7 +55,7 @@ static LRESULT WINAPI messageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 }
 
 
-bool createWindow(WindowContext* context, LPCTSTR title) {
+bool API_CALL_CONVENTION createWindow(WindowContext* context, LPCTSTR title) {
     WNDCLASS wnd;
     memset(&wnd, 0, sizeof(wnd));
     HINSTANCE hInstance = GetModuleHandle(NULL);
@@ -113,7 +113,7 @@ bool createWindow(WindowContext* context, LPCTSTR title) {
     return true;
 }
 
-void mainLoop(WindowContext* context) {
+void API_CALL_CONVENTION mainLoop(WindowContext* context) {
     MSG msg = { 0 };
     int done = 0;
     // DWORD lastTime = GetTickCount();
