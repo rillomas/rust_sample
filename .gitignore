@@ -8,15 +8,13 @@
 /*.dll
 /*.lib
 .reviewboardrc
-CMakeFiles
-CMakeCache.txt
-Makefile
 *.vcxproj
 *.filters
 *.sln
 *.cmake
 angle
 rust-opengles
+target
 
 
 #################

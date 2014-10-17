@@ -1,0 +1,11 @@
+[root]
+name = "rust_sample"
+version = "0.0.1"
+dependencies = [
+ "winapi 0.0.1",
+]
+
+[[package]]
+name = "winapi"
+version = "0.0.1"
+

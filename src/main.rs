@@ -4,7 +4,7 @@
 // extern crate gl2;
 // extern crate egl;
 extern crate winapi;
-use std::ptr::null;
+use std::ptr;
 // use std::io;
 
 
@@ -44,18 +44,18 @@ fn main() {
     // let handle = winapi::get_module_handle(Some(~"main.exe"));
     let handle = winapi::get_module_handle(None);
     println!("handle: {}", handle);
-    let context = winapi::WindowContext {
+    let mut context = winapi::WindowContext {
         width: 320,
         height: 240,
-        handle: null()
+        handle: ptr::null_mut()
     };
-    let result = winapi::create_window(&context, ~"Sample Window");
+    let result = winapi::create_window(&mut context, "Sample Window");
     if !result {
         println!("Failed to create window");
         return;
     }
 
-    winapi::main_loop(&context);
+    winapi::main_loop(&mut context);
     // println!("Hello world");
     // let mut lh = LineHandle {
     //     name: ~"line",

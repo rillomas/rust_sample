@@ -12,9 +12,9 @@ extern "C" {
 
 
 typedef struct {
-	int width;
-	int height;
-	HWND handle;
+    int width;
+    int height;
+    HWND handle;
 } WindowContext;
 
 bool API_CALL_CONVENTION createWindow(WindowContext* context, LPCTSTR title);
